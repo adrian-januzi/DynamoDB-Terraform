@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  terraform:
+    image: hashicorp/terraform:1.2.4
+    volumes:
+      - ./terraform:/terraform
+      - ${HOME}/.aws/credentials:/root/.aws/credentials
+    working_dir: /terraform
+    environment:
+      - TF_VAR_aws_credentials_profile=${AWS_CREDENTIALS_PROFILE}
+      - TF_VAR_dynamodb_region=${DYNAMODB_REGION}
+      - TF_VAR_dynamodb_name=${DYNAMODB_NAME}
