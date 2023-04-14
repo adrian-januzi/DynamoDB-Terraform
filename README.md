@@ -1,7 +1,7 @@
 Provisions a basic DynamoDB on AWS. By default:
-    - the partition key set to `{ "id" : N }`.
-    - streaming enabled and view type set to `NEW_AND_OLD_IMAGES`.
-    - read and write capacity set to 20.
+- the partition key set to `{ "id" : N }`.
+- streaming enabled and view type set to `NEW_AND_OLD_IMAGES`.
+- read and write capacity set to 20.
 
 
 To Run:
