@@ -6,10 +6,13 @@ Provisions a basic DynamoDB on AWS. By default:
 
 To Run:
 1. Set the following environment variables either through using `export <var>` in a shell script/console or a `.env` file:
-    - AWS_CREDENTIALS_PROIFLE=
+    - AWS_CREDENTIALS_PROFILE=
     - DYNAMODBDB_NAME=
     - DYNAMODB_REGION=
 
 2. In the console, run: `make start`.
 
 3. Confirm the DynamoDB table has been created on AWS.
+
+Notes:
+- Ensure the `AWS_CREDENTIALS_PROFILE` you are using above is present with `~/.aws/credentials`

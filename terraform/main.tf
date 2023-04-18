@@ -47,3 +47,63 @@ resource "aws_dynamodb_table" "dynamodb_table" {
         Name = "Terraform Provisioned"
     }
 }
+
+
+# IAM User Policy
+resource "aws_iam_user" "dynamodb_user" {
+  name = "dynamodb_user"
+}
+
+
+resource "aws_iam_access_key" "dynamodb_access_key" {
+  user = aws_iam_user.dynamodb_user.name
+}
+
+
+resource "aws_iam_user_policy" "dynamodb_policy" {
+  name = "dynamodb-policy"
+  user = aws_iam_user.dynamodb_user.name
+
+  policy = jsonencode(
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "dynamodb:DescribeTable",
+                  "dynamodb:DescribeStream",
+                  "dynamodb:ListTagsOfResource",
+                  "dynamodb:DescribeLimits",
+                  "dynamodb:GetRecords",
+                  "dynamodb:GetShardIterator",
+                  "dynamodb:Scan"
+              ],
+              "Resource": [
+                  "${aws_dynamodb_table.dynamodb_table.*.arn[0]}"
+              ]
+          },
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "dynamodb:*"
+              ],
+              "Resource": [
+                  "${aws_dynamodb_table.dynamodb_table.*.arn[0]}/*"
+              ]
+          },
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "dynamodb:ListStreams",
+                  "dynamodb:ListTables",
+                  "dynamodb:ListGlobalTables",
+                  "tag:GetResources"
+              ],
+              "Resource": [
+                  "*"
+              ]
+          }
+      ]
+  })
+}
